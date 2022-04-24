@@ -4,7 +4,7 @@ import Navbar from '../general/Navbar';
 import Footer from '../general/Footer';
 import {Link} from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
-import {login,
+import {login,selectUser_Id,
     selectRole,selectEmail,selectPassword,   
     selectGender,selectFirst_name,selectLast_name,
     selectDob,selectPhone } from "../../features/userSlice";
@@ -23,6 +23,7 @@ const SeekerLoginForm = () => {
     const [lname,setLastName] = useState('');
     const [dob,setDob] = useState('');
     const [phone,setPhone] = useState('');
+    const [userId,setUserId] = useState('');
 
     const userRole = useSelector(selectRole);
     const userEmail = useSelector(selectEmail);
@@ -32,13 +33,27 @@ const SeekerLoginForm = () => {
     const userLast_name = useSelector(selectLast_name);
     const userDob = useSelector(selectDob);
     const userPhone = useSelector(selectPhone);
+    const user_Id = useSelector(selectUser_Id);
 
 
     const handleFormSubmit = (e) => {
         console.log("Clicked");
         e.preventDefault();
         
+        api.post('/signup/seeker',{
+                        userRole,email,
+                        password,gender,
+                        fname,lname,
+                        dob,phone
+        }).then((res)=>{
+            console.log("hellllllo");
+            console.log(res.data);
+            console.log(res.data.User_Id);
+            setUserId(res.data.User_Id);
+        
+
         dispatch(login({
+            User_Id:userId,
             role: "Seeker",
             email:email,
             password:password,
@@ -50,15 +65,7 @@ const SeekerLoginForm = () => {
         }))
 
         console.log(userRole,userEmail,userPassword);
-        api.post('/signup/seeker',{
-                        userRole,userEmail,
-                        userPassword,userGender,
-                        userFirst_name,userLast_name,
-                        userDob,userPhone
-        }).then((res)=>{
-            console.log("hellllll");
-            console.log(res.data);
-        })
+    })
                   
     }
 
@@ -122,16 +129,9 @@ const SeekerLoginForm = () => {
                    
                     onChange = {e=>setPhone(e.target.value)}
                 />
-                {/*
-                <label>Your Educational Information</label>
-                <textarea           
-                    rows='6' 
-                    placeholder='Type a short message here' 
-                   
-                    onChange = { e=>setEducationalInformation(e.target.value) }
-                />*/}
                 <button className='btn'>Submit</button>
             </form>
+
             <Link to="/seekerDashboard">
                     <button className='btn'>Go to Seeker Dashboard</button>
             </Link>

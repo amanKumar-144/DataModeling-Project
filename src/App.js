@@ -8,6 +8,7 @@ import SeekerLoginForm from "./components/Login/SeekerLoginForm";
 import CompanyLoginForm from "./components/Login/CompanyLoginForm"; 
 import Company from './components/Company/Company';
 import Seeker from './components/Seeker/Seeker';
+import SeekerDetails from './components/Seeker/SeekerDetails';
 import Trainer from './components/Trainer/Trainer';
 import Admin from './components/Admin/Admin';
 
@@ -23,6 +24,7 @@ const App = () => {
             <Routes>
               <Route path="/seekerDashboard" element={<Seeker />}/>
               <Route path="/seekerLoginForm" element={<SeekerLoginForm />} />
+              <Route path="/seekerDetails" element={<SeekerDetails />} />
             </Routes>
           )
         }
