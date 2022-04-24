@@ -2,12 +2,22 @@ import React from 'react';
 import "./Login.css";
 import { useSelector,useDispatch } from 'react-redux';
 import {login,logout,
-    selectUserRole,selectUserName,
-    selectUserAge,selectUserGender,
-    selectUserEmail,selectUserNumber,
-    selectUserEducationalInformation,
-    selectUserSkills,selectUserRolesPreferred,
-    selectCompanyName,selectCompanyEmail } from "../../features/userSlice";
+    selectRole,selectEmail,selectPassword,   
+    selectGender,selectFirst_name,selectLast_name,
+    selectDob,selectPhone,   
+
+    selectUrl,selectCname,selectDesc,
+
+    selectJob_desc,selectJob_title,selectJob_type,
+    selectSalary,selectCurrency,selectLoc_city,selectLoc_country,
+    selectLoc_state,selectLoc_zip,selectLoc_street_name,
+
+    selectPrev_company,selectStart_date,selectEnd_date,
+
+    selectCgpa,selectCertificate,selectMajor,selectUniversity
+
+} from "../../features/userSlice";   
+
 import {Link} from 'react-router-dom';
 
 import jobVideo from "../assets/video.mp4";
@@ -18,67 +28,86 @@ const Login = (props) => {
 
     const dispatch = useDispatch();
 
-    const userRole = useSelector(selectUserRole);
-    const userName = useSelector(selectUserName);
-    const userAge = useSelector(selectUserAge);
-    const userGender = useSelector(selectUserGender);
-    const userEmail = useSelector(selectUserEmail);
-    const userNumber = useSelector(selectUserNumber);
-    const userEducationalInformation = useSelector(selectUserEducationalInformation);
-    const userSkills = useSelector(selectUserSkills);
-    const userRolesPreferred = useSelector(selectUserRolesPreferred);
-    const companyName = useSelector(selectCompanyName);
-    const companyEmail = useSelector(selectCompanyEmail);
+    const userRole = useSelector(selectRole);
+    const userEmail = useSelector(selectEmail);
+    const userPassword = useSelector(selectPassword);
+    const userGender = useSelector(selectGender);
+    const userFirst_name = useSelector(selectFirst_name);
+    const userLast_name = useSelector(selectLast_name);
+    const userDob = useSelector(selectDob);
+    const userPhone = useSelector(selectPhone);
+
+
+    const userUrl   = useSelector(selectUrl);
+    const userCname = useSelector(selectCname);
+    const userDesc  = useSelector(selectDesc);
+
+
+    const userJob_desc  = useSelector(selectJob_desc);
+    const userJob_title = useSelector(selectJob_title);
+    const userJob_type  = useSelector(selectJob_type);
+    const userSalary    = useSelector(selectSalary);
+    const userCurrency  = useSelector(selectCurrency);
+    const userLoc_city  = useSelector(selectLoc_city);
+    const userLoc_country = useSelector(selectLoc_city);
+    const userLoc_state = useSelector(selectLoc_state);
+    const userLoc_zip = useSelector(selectLoc_zip);
+    const userLoc_street_name  = useSelector(selectLoc_street_name);
+
+    const userPrev_company  = useSelector(selectPrev_company);
+    const userStart_date    = useSelector(selectStart_date);
+    const userEnd_date      = useSelector(selectEnd_date);
+
+    const userCgpa          = useSelector(selectCgpa);
+    const userCertificate   = useSelector(selectCertificate);
+    const userMajor         = useSelector(selectMajor);
+    const userUniversity    = useSelector(selectUniversity);
 
     const registerSeeker = () => {
         console.log("Register Seeker");
         dispatch(login({
-            userRole:"Seeker",
-            userName:"Aman",
-            userAge:"21",
-            userGender:"Male",
-            userEmail:"aman.kumar@iiitb.org",
-            userNumber:"9380480882",
-            userEducationalInformation:"IMTech from IIIT-Bangalore",
-            userSkills:["C++","Javascript","Python"],
-            userRolesPreferred:["SDE-1","Member of Technical Staff","Data Scientist"],
-            companyName:"",
-            companyEmail:"",
+            role: "Seeker",
+            email:"aman.kumar@iiitb.org",
+            password:"password",
+            gender:"Male",
+            first_name:"Aman",
+            last_name:"Kumar",
+            dob:"2000-11-15",
+            phone:"9380480882",
         }))
     }
     const loginSeeker = () => {
         console.log("Login Seeker");
         dispatch(login({
-            userRole:"Seeker",
-            userName:"Aman",
-            userAge:"21",
-            userGender:"Male",
-            userEmail:"aman.kumar@iiitb.org",
-            userNumber:"9380480882",
-            userEducationalInformation:"IMTech from IIIT-Bangalore",
-            userSkills:["C++","Javascript","Python"],
-            userRolesPreferred:["SDE-1","Member of Technical Staff","Data Scientist"],
-            companyName:"",
-            companyEmail:"",
+            role: "Seeker",
+            email:"aman.kumar@iiitb.org",
+            password:"password",
+            gender:"Male",
+            first_name:"Aman",
+            last_name:"Kumar",
+            dob:"2000-11-15",
+            phone:"9380480882",
+        }))
+    }
+    const registerCompany = () => {
+        console.log("Login Company");
+        dispatch(login({
+            role: "Company",
+            url: "www.adobe.com",
+            cname:"Adobe",
+            desc:"We build digital products"
         }))
     }
     const loginCompany = () => {
         console.log("Login Company");
         dispatch(login({
-            userRole:"Company",
-            userName:"",
-            userAge:"",
-            userGender:"",
-            userEmail:"",
-            userNumber:"",
-            userEducationalInformation:"",
-            userSkills:[],
-            userRolesPreferred:[],
-            companyName:"Adobe",
-            companyEmail:"www.adobe.com",
+            role: "Company",
+            url: "www.adobe.com",
+            cname:"Adobe",
+            desc:"We build digital products"
         }))
     }
-    const loginTrainer = () => {
+    /*const loginTrainer = () => {
         console.log("Login Trainer");
         dispatch(login({
             userRole:"Trainer",
@@ -109,7 +138,7 @@ const Login = (props) => {
             companyName:"",
             companyEmail:"",
         }))
-    }
+    }*/
     return (
       <div>
         <Navbar />
@@ -133,21 +162,17 @@ const Login = (props) => {
                             Login Seeker
                         </button>
                     </Link>
+                    <Link to='/companyLoginForm'>
+                        <button className='btn btn-light' onClick={registerCompany}>
+                            Register Company
+                        </button>
+                    </Link>
                     <Link to='/companyDashboard'>
                         <button className='btn btn-light' onClick={loginCompany}>
                             Login Company
                         </button>
                     </Link>
-                    <Link to='/trainerDashboard'>
-                        <button className='btn btn-light' onClick={loginTrainer}>
-                            Login Trainer
-                        </button>
-                    </Link>
-                    <Link to="/adminDashboard">
-                        <button className='btn btn-light' onClick={loginAdmin}>
-                            Login Admin
-                        </button>
-                    </Link>
+                    
 
                 </div>
             </div>

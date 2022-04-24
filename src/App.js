@@ -2,16 +2,17 @@ import React from 'react';
 import "./App.css";
 import {BrowserRouter as Router,Routes,Route} from "react-router-dom";
 import { useSelector } from 'react-redux';
-import {selectUserRole} from "./features/userSlice";
+import {selectRole} from "./features/userSlice";
 import Login from "./components/Login/Login";
-import SeekerLoginForm from "./components/Login/SeekerLoginForm";
+import SeekerLoginForm from "./components/Login/SeekerLoginForm"; 
+import CompanyLoginForm from "./components/Login/CompanyLoginForm"; 
 import Company from './components/Company/Company';
 import Seeker from './components/Seeker/Seeker';
 import Trainer from './components/Trainer/Trainer';
 import Admin from './components/Admin/Admin';
 
 const App = () => {
-  const userRole = useSelector(selectUserRole);
+  const userRole = useSelector(selectRole);
 
 
   return (
@@ -29,6 +30,7 @@ const App = () => {
           userRole && userRole==="Company" && (
             <Routes>
               <Route path="/companyDashboard" element={<Company />}/>
+              <Route path="/companyLoginForm" element={<CompanyLoginForm />}/>
             </Routes>
           )
         }

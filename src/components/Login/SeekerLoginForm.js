@@ -4,55 +4,62 @@ import Navbar from '../general/Navbar';
 import Footer from '../general/Footer';
 import {Link} from 'react-router-dom';
 import { useSelector,useDispatch } from 'react-redux';
-import {login,logout,
-    selectUserRole,selectUserName,
-    selectUserAge,selectUserGender,
-    selectUserEmail,selectUserNumber,
-    selectUserEducationalInformation,
-    selectUserSkills,selectUserRolesPreferred,
-    selectCompanyName,selectCompanyEmail } from "../../features/userSlice";
+import {login,
+    selectRole,selectEmail,selectPassword,   
+    selectGender,selectFirst_name,selectLast_name,
+    selectDob,selectPhone } from "../../features/userSlice";
+
+import api from '../../api/axiosFile'
 
 
 const SeekerLoginForm = () => {
 
     const dispatch = useDispatch();
 
-    const [name,setName] = useState('');
-    const [age,setAge] = useState('');
-    const [gender,setGender] = useState('');
     const [email,setEmail] = useState('');
-    const [number,setNumber] = useState('');
-    const [educationalInformation,setEducationalInformation] = useState('');
+    const [password,setPassword] = useState('');
+    const [gender,setGender] = useState('');
+    const [fname,setFirstName] = useState('');
+    const [lname,setLastName] = useState('');
+    const [dob,setDob] = useState('');
+    const [phone,setPhone] = useState('');
 
-    const userRole = useSelector(selectUserRole);
-    const userName = useSelector(selectUserName);
-    const userAge = useSelector(selectUserAge);
-    const userGender = useSelector(selectUserGender);
-    const userEmail = useSelector(selectUserEmail);
-    const userNumber = useSelector(selectUserNumber);
-    const userEducationalInformation = useSelector(selectUserEducationalInformation);
-    const userSkills = useSelector(selectUserSkills);
-    const userRolesPreferred = useSelector(selectUserRolesPreferred);
-    const companyName = useSelector(selectCompanyName);
-    const companyEmail = useSelector(selectCompanyEmail);
+    const userRole = useSelector(selectRole);
+    const userEmail = useSelector(selectEmail);
+    const userPassword = useSelector(selectPassword);
+    const userGender = useSelector(selectGender);
+    const userFirst_name = useSelector(selectFirst_name);
+    const userLast_name = useSelector(selectLast_name);
+    const userDob = useSelector(selectDob);
+    const userPhone = useSelector(selectPhone);
 
 
     const handleFormSubmit = (e) => {
-        console.log("CLicked");
+        console.log("Clicked");
         e.preventDefault();
+        
         dispatch(login({
-            userRole:"Seeker",
-            userName:name,
-            userAge:age,
-            userGender:gender,
-            userEmail:email,
-            userNumber:number,
-            userEducationalInformation:educationalInformation,
-            userSkills:["C++","Javascript","Python"],
-            userRolesPreferred:["SDE-1","Member of Technical Staff","Data Scientist"],
-            companyName:"",
-            companyEmail:"",
+            role: "Seeker",
+            email:email,
+            password:password,
+            gender:gender,
+            first_name:fname,
+            last_name:lname,
+            dob:dob,
+            phone:phone,
         }))
+
+        console.log(userRole,userEmail,userPassword);
+        api.post('/signup/seeker',{
+                        userRole,userEmail,
+                        userPassword,userGender,
+                        userFirst_name,userLast_name,
+                        userDob,userPhone
+        }).then((res)=>{
+            console.log("hellllll");
+            console.log(res.data);
+        })
+                  
     }
 
   return (
@@ -62,19 +69,20 @@ const SeekerLoginForm = () => {
             <form onSubmit={handleFormSubmit}>
                 <h1>Form Details</h1>
                 
-                <label>Your Name</label>
+                <label>Your First Name</label>
                 <input 
                     type='text' 
                     name="name"
                   
-                    onChange = {e => setName(e.target.value)}
+                    onChange = {e => setFirstName(e.target.value)}
                 />
-                <label>Your Age</label>
+
+                <label>Your Last Name</label>
                 <input 
                     type='text' 
-                    name="age"
+                    name="name"
                   
-                    onChange = {e => setAge(e.target.value)}
+                    onChange = {e => setLastName(e.target.value)}
                 />
 
                 <label>Your Gender</label>
@@ -92,21 +100,36 @@ const SeekerLoginForm = () => {
                     onChange = {e => setEmail(e.target.value)}
                 />
 
-                <label>Your Number</label>
+                <label>Your Password</label>
+                <input 
+                    type='password' 
+                    name="email"
+                    onChange = {e => setPassword(e.target.value)}
+                />
+
+                <label>Your Date of Birth</label>
                 <input 
                     type='text' 
                     name="number"
                    
-                    onChange = {e=>setNumber(e.target.value)}
+                    onChange = {e=>setDob(e.target.value)}
                 />
 
+                <label>Your Phone Number</label>
+                <input 
+                    type='text' 
+                    name="number"
+                   
+                    onChange = {e=>setPhone(e.target.value)}
+                />
+                {/*
                 <label>Your Educational Information</label>
-                <textarea 
+                <textarea           
                     rows='6' 
                     placeholder='Type a short message here' 
                    
                     onChange = { e=>setEducationalInformation(e.target.value) }
-                />
+                />*/}
                 <button className='btn'>Submit</button>
             </form>
             <Link to="/seekerDashboard">

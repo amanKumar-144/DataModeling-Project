@@ -2,13 +2,13 @@ import React,{useState,useEffect} from 'react';
 import { useSelector,useDispatch } from 'react-redux';
 import {FaBars,FaTimes} from 'react-icons/fa';
 import "./Navbar.css";
-import {selectUserRole} from "../../features/userSlice";
+import {selectRole} from "../../features/userSlice";
 import {Link} from 'react-router-dom';
 
 const Navbar = () => {
     const [click,setClick] = useState(false);
     const [color,setColor] = useState(false);
-    const userRole = useSelector(selectUserRole);
+    const userRole = useSelector(selectRole);
 
     const handleClick=()=>setClick(!click);
     const changeColor=async()=>{
